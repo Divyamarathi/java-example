@@ -1,9 +1,9 @@
 pipeline{
-    agent {label 'angular'}
+    agent {label 'build'}
     stages{
        stage('Git Checkout Stage'){
             steps{
-                git branch: 'main', url: 'https://github.com/sudheer76R/java-example.git'
+                git branch: 'main', url: 'https://github.com/Divyamarathi/java-example.git'
             }
          }        
        stage('Build Stage'){
