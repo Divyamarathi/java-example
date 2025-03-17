@@ -24,7 +24,7 @@ pipeline{
                     // Configure Artifactory
                     sh '''
                     curl -fL https://getcli.jfrog.io | sh
-                    ./jfrog rt config --url=http://13.228.72.253:8081/ --user=divya_admin --password=divyaadmin
+                    ./jfrog config add jfrog --artifactory-url==http://13.228.72.253:8081/ --user=divya_admin --password=divyaadmin
                     '''
                     
                     // Upload the artifact
