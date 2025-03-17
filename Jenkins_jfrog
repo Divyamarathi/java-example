@@ -1,0 +1,41 @@
+pipeline{
+    agent {label 'build'}
+    stages{
+       stage('Git Checkout Stage'){
+            steps{
+                git branch: 'main', url: 'https://github.com/Divyamarathi/java-example.git'
+            }
+         }        
+       stage('Build Stage'){
+            steps{
+                sh 'mvn clean install'
+            }
+         }
+        stage('SonarQube Analysis Stage') {
+            steps{
+                withSonarQubeEnv('sonarqube-server') { 
+                    sh "mvn clean verify sonar:sonar"
+                }
+            }
+        }
+        sstage('Push artifacts into artifactory') {
+            steps {
+              rtUpload (
+                serverId: 'jfrog',
+                spec: '''{
+                      "files": [
+                        {
+                          "pattern": "*.war",
+                           "target": "maven"
+                        }
+                    ]
+                }'''
+              )
+          }
+        }
+
+            }
+        }
+
+    }
+}
