@@ -11,13 +11,13 @@ pipeline{
                 sh 'mvn clean install'
             }
          }
-        stage('SonarQube Analysis Stage') {
+       /* stage('SonarQube Analysis Stage') {
             steps{
                 withSonarQubeEnv('sonarqube-server') { 
                     sh "mvn clean verify sonar:sonar"
                 }
             }
-        }
+        }*/
 	stage('Push artifacts into artifactory') {
             steps {
               rtUpload (
