@@ -1,5 +1,10 @@
 pipeline{
     agent {label 'build'}
+    environment {
+        ARTIFACTORY_URL = 'https://my-artifactory.com'
+        ARTIFACTORY_REPO = 'maven'
+        ARTIFACTORY_CREDENTIALS_ID = 'artifactory-credentials-id'  // Jenkins credentials ID
+    }
     stages{
        stage('Git Checkout Stage'){
             steps{
@@ -18,22 +23,23 @@ pipeline{
                 }
             }
         }*/
-	stage('Push to Artifactory') {
+	stage('Publish Artifacts') {
             steps {
                 script {
-                    // Configure Artifactory
-                    sh '''
-                    curl -fL https://getcli.jfrog.io | sh
-                    ./jfrog config add jfrog --artifactory-url=http://13.228.72.253:8081/ --user=divya_admin --password=divyaadmin
-                    '''
-                    
-                    // Upload the artifact
-                    sh '''
-                    ./jfrog rt u "target/*.war" "maven/java_jfrog/"
-                    '''
+                    // Publish the artifact to Artifactory
+                    def server = Artifactory.server('jfrog')
+                    def uploadSpec = """{
+                        "files": [{
+                            "pattern": "target/*.war",
+                            "target": "${ARTIFACTORY_REPO}/my-app/"
+                        }]
+                    }"""
+                    server.upload(uploadSpec)
                 }
             }
         }
+
+
 
 
     }
