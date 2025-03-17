@@ -18,7 +18,7 @@ pipeline{
                 }
             }
         }
-        sstage('Push artifacts into artifactory') {
+	stage('Push artifacts into artifactory') {
             steps {
               rtUpload (
                 serverId: 'jfrog',
@@ -26,15 +26,12 @@ pipeline{
                       "files": [
                         {
                           "pattern": "*.war",
-                           "target": "maven"
+                           "target": "example-repo-local/build-files/"
                         }
                     ]
                 }'''
               )
           }
-        }
-
-            }
         }
 
     }
