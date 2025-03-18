@@ -31,7 +31,7 @@ pipeline{
                     def uploadSpec = """{
                         "files": [{
                             "pattern": "target/*.war",
-                            "target": "maven/test.war"
+                            "target": "maven/java_example.war"
                         }]
                     }"""
                     server.upload(uploadSpec)
