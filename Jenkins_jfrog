@@ -1,9 +1,9 @@
 pipeline{
     agent {label 'build'}
     environment {
-        ARTIFACTORY_URL = 'https://my-artifactory.com'
+        //ARTIFACTORY_URL = 'https://my-artifactory.com'
         ARTIFACTORY_REPO = 'maven'
-        ARTIFACTORY_CREDENTIALS_ID = 'artifactory-credentials-id'  // Jenkins credentials ID
+        //ARTIFACTORY_CREDENTIALS_ID = 'artifactory-credentials-id'  // Jenkins credentials ID
     }
     stages{
        stage('Git Checkout Stage'){
@@ -31,7 +31,7 @@ pipeline{
                     def uploadSpec = """{
                         "files": [{
                             "pattern": "target/*.war",
-                            "target": "${ARTIFACTORY_REPO}/my-app/"
+                            "target": "maven/test.war"
                         }]
                     }"""
                     server.upload(uploadSpec)
